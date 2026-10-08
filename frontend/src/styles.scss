@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+
+@font-face {
+  font-family: 'Onest';
+  font-weight: 400;
+  src: url("assets/fonts/Onest-Regular.ttf");
+
+}
+
+@font-face {
+  font-family: 'Onest';
+  font-weight: 700;
+  src: url("assets/fonts/Onest-Bold.ttf");
+
+}
+
+@font-face {
+  font-family: 'Onest';
+  font-weight: 600;
+  src: url("assets/fonts/Onest-SemiBold.ttf");
+
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay';
+  font-weight: 500;
+  src: url("assets/fonts/PlayfairDisplay_Medium.ttf");
+
+}
+
+
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+
+  font-family: Onest, sans-serif;
+  font-weight: 400;
+}
