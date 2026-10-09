@@ -6,7 +6,7 @@
   .main_info {
     min-height: 450px;
     background-image:  linear-gradient(270deg, rgba(253, 253, 251, 0) 19.72%, #FDFDFB 56.37%),
-    url("../../../../public/bg_images/main_screen_top.png");
+    url("../../../../public/images/bg_images/main_screen_top.png");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 60px;
@@ -83,6 +83,27 @@
 
 
 .places {
-  background-image: url("../../../../public/bg_images/page_pattern.png");
+  background-image: url("../../../../public/images/bg_images/page_pattern.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  padding: 135px 120px 30px 120px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+  justify-items: center;
+  grid-gap: 24px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 60px 20px;
+  }
+  @media (max-width: 700px) {
+    grid-template-columns:  auto;
+  }
+
+
+
+
 
 }

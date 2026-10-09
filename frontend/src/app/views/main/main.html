@@ -16,6 +16,9 @@
     </div>
   </section>
   <section class="places">
+    @for (place of places; track place.id) {
+      <app-place-card [place]="place"></app-place-card>
+    }
 
   </section>
 </div>

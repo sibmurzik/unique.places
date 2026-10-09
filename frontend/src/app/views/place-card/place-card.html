@@ -1,1 +1,50 @@
-<p>place-card works!</p>
+@if(place) {
+<div class="card__container">
+  <div class="card__image">
+    <img src="{{place.imageUrl}}" alt="Place photo">
+  </div>
+  <div class="card__info">
+    <div class="place__name">{{place.name}}</div>
+    <div class="place__category">{{place.category}}</div>
+    <div class="place__city-country">{{place.city + ", " + place.country}}</div>
+    <div class="place__rating-price">
+      <div class="place__rating">
+        <img src="icons/rating_star.png" alt="Rating star">
+        <span>{{place.rating}}</span>
+      </div>
+      <div class="place__price-level">
+        @for( num of priceLevels; track num){
+          <img src="icons/euro.png" alt="Euro mark">
+        }
+
+      </div>
+    </div>
+    <div class="place__tags">
+      @for(tag of place.tags; track tag) {
+        <div class="place__tag">{{tag}}</div>
+      }
+    </div>
+    <div class="place__description">
+      @if (isFullDescription) {
+        <p>{{place.description}}</p>
+
+      } @else {
+        <p>{{place.shortDescription}}</p>
+      }
+
+    </div>
+    <div class="place__full-short-switcher">
+    @if(!isFullDescription){
+      <button (click)="toggleDescription()">Подробнее</button>
+    } @else {
+      <button (click)="toggleDescription()">Скрыть</button>
+    }
+    </div>
+
+
+
+
+  </div>
+
+</div>
+}

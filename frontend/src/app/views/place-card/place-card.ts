@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Place } from '../../types/place';
 
 @Component({
   imports: [],
@@ -6,4 +7,32 @@ import { Component } from '@angular/core';
   styleUrl: './place-card.scss',
   templateUrl: './place-card.html',
 })
-export class PlaceCard {}
+export class PlaceCard implements OnInit {
+  @Input() place: Place | undefined;
+
+  isFullDescription: boolean = false;
+
+  toggleDescription() {
+    this.isFullDescription = !this.isFullDescription;
+  }
+
+  priceLevels:number[] = [];
+
+
+  ngOnInit() {
+    if (this.place) {
+      for (let i = 0; i < this.place.priceLevel; i++) {
+        this.priceLevels.push(i);
+      }
+    }
+
+
+
+  }
+
+
+
+
+
+
+}
