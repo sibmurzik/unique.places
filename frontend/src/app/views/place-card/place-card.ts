@@ -12,14 +12,14 @@ export class PlaceCard implements OnInit {
 
   isFullDescription: boolean = false;
 
-  toggleDescription() {
+  toggleDescription():void {
     this.isFullDescription = !this.isFullDescription;
   }
 
   priceLevels:number[] = [];
 
 
-  ngOnInit() {
+  ngOnInit():void {
     if (this.place) {
       for (let i = 0; i < this.place.priceLevel; i++) {
         this.priceLevels.push(i);
@@ -29,10 +29,6 @@ export class PlaceCard implements OnInit {
 
 
   }
-
-
-
-
 
 
 }

@@ -1,24 +1,30 @@
 <div class="main">
-  <section class="main_info">
-    <div class="main_info__container">
-      <div class="main_info__title">
-        Места, которые стоит увидеть хотя бы раз в жизни
-      </div>
-      <div class="main_info__divider">
-        <div class="main_info__line"></div>
-        <img src="icons/star.png" alt="Star">
-
-      </div>
+  <div class="main_info_container">
+    <section class="main_info">
       <div class="main_info__text">
-        Необычные рестораны, отели, развлечения и другие уникальные места со всего мира
-      </div>
-      <img  src="icons/main_info_image.png" alt="Image Explore the Word" class="main_info__image">
-    </div>
-  </section>
-  <section class="places">
-    @for (place of places; track place.id) {
-      <app-place-card [place]="place"></app-place-card>
-    }
+        <div class="main_info__title">
+          Места, которые стоит увидеть хотя бы раз в жизни
+        </div>
+        <div class="main_info__divider">
+          <div class="main_info__line"></div>
+          <img src="icons/star.png" alt="Star">
 
-  </section>
+        </div>
+        <div class="main_info__text">
+          Необычные рестораны, отели, развлечения и другие уникальные места со всего мира
+        </div>
+        <img src="icons/main_info_image.png" alt="Image Explore the Word" class="main_info__image">
+      </div>
+    </section>
+  </div>
+  <div class="places__container">
+    <section class="places">
+
+      @for (place of places; track place.id) {
+        <app-place-card [place]="place"></app-place-card>
+      }
+
+
+    </section>
+  </div>
 </div>
