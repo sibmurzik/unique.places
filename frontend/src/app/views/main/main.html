@@ -1,4 +1,10 @@
 <div class="main">
+  @if (show_full_place_card()) {
+    <app-modal-place-card [detailed_place]="detailed_place()"
+                          (close_modal_card)="hideFullPlaceDetails($event)">
+
+    </app-modal-place-card>
+  }
   <div class="main_info_container">
     <section class="main_info">
       <div class="main_info__text">
@@ -17,14 +23,31 @@
       </div>
     </section>
   </div>
-  <div class="places__container">
-    <section class="places">
+  <section class="places">
+    <div class="places__container">
+      <section class="places__filters">
+        @for (filter of filters; track filter.id) {
+          <div class="places__filter">
+            {{ filter.name }}
+          </div>
+        }
 
-      @for (place of places; track place.id) {
-        <app-place-card [place]="place"></app-place-card>
+      </section>
+      @if (places.length > 0) {
+      <section class="places__cards">
+          @for (place of places; track place) {
+            <app-place-card [place]="place" (full_details)="showFullPlaceDetails(place)"></app-place-card>
+          }
+      </section>
       }
+      @else {
+        <div class="places__absent">
+          <img src="/images/absent_places.png" alt="Magnifying glass">
+          <p class="places__absent_title">Ничего не найдено</p>
+          <p class="places__absent_info">В этой категории пока нет уникальных мест</p>
+        </div>
+      }
+    </div>
 
-
-    </section>
-  </div>
+  </section>
 </div>

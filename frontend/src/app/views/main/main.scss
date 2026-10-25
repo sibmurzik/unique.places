@@ -4,7 +4,7 @@
 
 .main {
   background-color: #FDFDFB;
-
+  position: relative;
 
   .main_info_container {
     background-image: linear-gradient(270deg, rgba(253, 253, 251, 0) 19.72%, #FDFDFB 56.37%),
@@ -91,31 +91,89 @@
   }
 }
 
-.places__container {
+.places {
   background-image: url("../../../../public/images/bg_images/page_pattern.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
 
-  .places {
+  &__container {
     max-width: 1200px;
     margin: 0 auto;
+  }
 
-    padding: 135px 20px 30px 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: stretch;
-    justify-items: center;
-    grid-gap: 24px;
 
-    @media (max-width: 1000px) {
-      grid-template-columns: repeat(2, 1fr);
-      padding: 60px 20px;
+    &__filters {
+      padding-top: 60px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: start;
+      flex-wrap: wrap;
+      @media (max-width: 1250px) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
     }
-    @media (max-width: 700px) {
-      grid-template-columns:  auto;
+    &__filter {
+      font-size: 18px;
+      color: $primary-text-color;
+      padding: 8px 20px;
+      border: 1px solid $title-text-color;
+      border-radius: 1000px;
+
+    }
+
+
+
+    &__cards {
+      padding: 40px 0 30px 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+      justify-items: center;
+      grid-gap: 24px;
+
+      @media (max-width: 1250px) {
+        padding: 40px 20px;
+      }
+
+      @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 1fr);
+
+      }
+      @media (max-width: 700px) {
+        grid-template-columns:  auto;
+      }
+
+
+    }
+    &__absent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 766px;
+      width: 100%;
+      .places__absent_title {
+        padding-top: 32px;
+        font-weight: 600;
+        font-size: 40px;
+        text-align: center;
+        color: $title-text-color;
+      }
+
+      .places__absent_info {
+        padding-top: 16px;
+        font-weight: 300;
+        font-size: 25px;
+        line-height: 120%;
+        text-align: center;
+        color: $primary-text-color;
+      }
     }
 
 
   }
-}
+
+

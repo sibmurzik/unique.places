@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit, output } from '@angular/core';
 import { Place } from '../../types/place';
 
 @Component({
@@ -8,20 +8,22 @@ import { Place } from '../../types/place';
   templateUrl: './place-card.html',
 })
 export class PlaceCard implements OnInit {
-  @Input() place: Place | undefined;
+  place = input.required<Place>();
+  show_full_details = output<Place>({alias:'full_details'});
 
-  isFullDescription: boolean = false;
 
-  toggleDescription():void {
-    this.isFullDescription = !this.isFullDescription;
+
+
+  showFullCard():void {
+    this.show_full_details.emit(this.place())
   }
 
   priceLevels:number[] = [];
 
 
   ngOnInit():void {
-    if (this.place) {
-      for (let i = 0; i < this.place.priceLevel; i++) {
+    if (this.place()) {
+      for (let i = 0; i < this.place().priceLevel; i++) {
         this.priceLevels.push(i);
       }
     }

@@ -1,16 +1,24 @@
-@if(place) {
+@if(place()) {
 <div class="card__container">
+  <div class="card__adult_control">
+    18+
+  </div>
+  <div class="card__favorite">
+    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.02743 13.9988C7.95234 13.999 7.87796 13.9841 7.80854 13.955C7.73912 13.926 7.67603 13.8833 7.62286 13.8295L1.26401 7.37575C0.862541 6.9716 0.544098 6.49064 0.327126 5.96071C0.110154 5.43079 -0.00103263 4.86244 7.22684e-06 4.2886C7.22684e-06 2.25447 1.51772 0 4.26286 0C5.37715 0 6.49258 0.414016 7.30858 1.24089L7.99657 1.93787L8.67315 1.24785C9.4773 0.443198 10.5632 -0.00475983 11.6926 0.00231953C15.0926 0.00231953 16 3.11266 16 4.35123C16 5.46107 15.5863 6.56975 14.7589 7.41402L8.432 13.8307C8.37884 13.8845 8.31574 13.9271 8.24632 13.9562C8.1769 13.9853 8.10252 14.0001 8.02743 14V13.9988ZM4.26286 1.11796C3.85287 1.11735 3.4468 1.19886 3.06791 1.35782C2.68903 1.51679 2.3448 1.75007 2.05494 2.04431C1.76509 2.33854 1.53532 2.68794 1.3788 3.07247C1.22229 3.45699 1.14211 3.86909 1.14286 4.28512C1.14286 5.30103 1.59658 6.07223 2.07201 6.55467L8.02743 12.6002L13.9497 6.5941C14.5554 5.97598 14.8571 5.16418 14.8571 4.35123C14.8581 3.92975 14.7767 3.51226 14.6179 3.12283C14.4591 2.73339 14.2258 2.37971 13.9317 2.08216C13.6375 1.78462 13.2882 1.54911 12.9039 1.38919C12.5196 1.22928 12.1079 1.14813 11.6926 1.15043C10.888 1.15043 10.0857 1.45543 9.48229 2.06776L8.40343 3.16832C8.35043 3.2224 8.28743 3.26533 8.21805 3.29466C8.14866 3.324 8.07426 3.33915 7.9991 3.33926C7.92394 3.33937 7.84949 3.32442 7.78003 3.29529C7.71056 3.26616 7.64745 3.22341 7.59429 3.16948L6.50172 2.06196C6.20876 1.76237 5.86012 1.52477 5.476 1.36292C5.09188 1.20108 4.67992 1.11821 4.26401 1.11912L4.26286 1.11796Z"  />
+    </svg>
+  </div>
   <div class="card__image">
-    <img src="{{place.imageUrl}}" alt="Place photo">
+    <img src="{{place().imageUrl}}" alt="Place photo">
   </div>
   <div class="card__info">
-    <div class="place__name">{{place.name}}</div>
-    <div class="place__category">{{place.category}}</div>
-    <div class="place__city-country">{{place.city + ", " + place.country}}</div>
+    <div class="place__name">{{place().name}}</div>
+    <div class="place__category">{{place().category}}</div>
+    <div class="place__city-country">{{place().city + ", " + place().country}}</div>
     <div class="place__rating-price">
       <div class="place__rating">
         <img src="icons/rating_star.png" alt="Rating star">
-        <span>{{place.rating}}</span>
+        <span>{{place().rating}}</span>
       </div>
       <div class="place__price-level">
         @for( num of priceLevels; track num){
@@ -20,31 +28,16 @@
       </div>
     </div>
     <div class="place__tags">
-      @for(tag of place.tags; track tag) {
+      @for(tag of place().tags; track tag) {
         <div class="place__tag">{{tag}}</div>
       }
     </div>
     <div class="place__description">
-      @if (isFullDescription) {
-        <p>{{place.description}}</p>
-
-      } @else {
-        <p>{{place.shortDescription}}</p>
-      }
-
+        {{place().shortDescription}}
     </div>
-    <div class="place__full-short-switcher">
-    @if(!isFullDescription){
-      <button (click)="toggleDescription()">Подробнее</button>
-    } @else {
-      <button (click)="toggleDescription()">Скрыть</button>
-    }
+    <div class="place__full-description_switcher">
+      <button (click)="showFullCard()">Подробнее</button>
     </div>
-
-
-
-
   </div>
-
 </div>
 }
