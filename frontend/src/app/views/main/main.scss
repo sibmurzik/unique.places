@@ -121,6 +121,14 @@
       padding: 8px 20px;
       border: 1px solid $title-text-color;
       border-radius: 1000px;
+      cursor: pointer;
+
+      &_active {
+        background: #e8d8b8;
+      }
+
+
+
 
     }
 

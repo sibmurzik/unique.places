@@ -27,15 +27,17 @@
     <div class="places__container">
       <section class="places__filters">
         @for (filter of filters; track filter.id) {
-          <div class="places__filter">
+          <div class="places__filter"
+               [class.places__filter_active] = "filter.name === applied_filter()"
+               (click)="setFilter(filter.name)">
             {{ filter.name }}
           </div>
         }
 
       </section>
-      @if (places.length > 0) {
+      @if (places().length > 0) {
       <section class="places__cards">
-          @for (place of places; track place) {
+          @for (place of places(); track place) {
             <app-place-card [place]="place" (full_details)="showFullPlaceDetails(place)"></app-place-card>
           }
       </section>

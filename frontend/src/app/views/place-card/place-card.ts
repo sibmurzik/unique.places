@@ -14,9 +14,7 @@ export class PlaceCard implements OnInit {
 
 
 
-  showFullCard():void {
-    this.show_full_details.emit(this.place())
-  }
+
 
   priceLevels:number[] = [];
 
@@ -29,6 +27,18 @@ export class PlaceCard implements OnInit {
     }
 
 
+
+  }
+
+  showFullCard():void {
+    this.show_full_details.emit(this.place())
+  }
+
+  addToFavorite(place: Place): void {
+
+  }
+
+  removeFromFavorite(place: Place): void {
 
   }
 

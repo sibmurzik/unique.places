@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { Place } from '../../types/place';
 import { PlaceCard } from '../place-card/place-card';
 import { ModalPlaceCard } from '../modal-place-card/modal-place-card';
@@ -9,7 +9,8 @@ import { ModalPlaceCard } from '../modal-place-card/modal-place-card';
   styleUrl: './main.scss',
   templateUrl: './main.html',
 })
-export class Main {
+export class Main implements OnInit {
+
   received_places: Place[] = [
     {
       id: '1',
@@ -142,10 +143,33 @@ export class Main {
     { id: 7, name: 'Архитектура' },
     { id: 8, name: 'СПА и релакс' },
   ];
-  places = this.received_places;
 
-  detailed_place = signal<Place>(this.places[0]);
+
+
   show_full_place_card = signal(false);
+  applied_filter = signal('Все');
+  places  = computed(() =>{
+    let filter = this.applied_filter();
+
+    if (filter === 'Все') {
+      return this.received_places;
+    }
+    if (filter === "Отели") {
+      filter = "Отель"
+    } else if (filter === "Рестораны") {
+      filter = "Ресторан"
+    }
+    return this.received_places.filter(place => place.category === filter);
+  });
+
+
+  detailed_place = signal<Place>(this.places()[0]);
+
+
+  ngOnInit(): void {
+    //console.log(this.places());
+
+  }
 
   showFullPlaceDetails(place: Place) {
     this.show_full_place_card.set(true);
@@ -156,5 +180,9 @@ export class Main {
     if (isToHide) {
       this.show_full_place_card.set(false);
     }
+  }
+
+  setFilter(filter: string) {
+    this.applied_filter.set(filter);
   }
 }
