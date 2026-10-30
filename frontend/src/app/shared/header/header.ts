@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FavoriteCounter } from '../favorite-counter';
 
 @Component({
   imports: [],
@@ -6,4 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './header.scss',
   templateUrl: './header.html',
 })
-export class Header {}
+export class Header {
+  private readonly favoriteService = inject(FavoriteCounter);
+
+  get counter() {
+    return this.favoriteService.favoriteCount();
+  }
+
+}

@@ -15,6 +15,4 @@ export type Place = {
   longitude: number;
   isPublished: true;
   inFavorite?: boolean;
-  in18plus?: boolean;
-  onlyBooking?: boolean;
 }

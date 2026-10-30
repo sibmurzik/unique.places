@@ -10,7 +10,7 @@ import { Place } from '../../types/place';
 export class ModalPlaceCard implements OnInit {
   detailed_place = input.required<Place>();
 
-  close_modal_card = output<boolean>();
+  close_modal_card = output<boolean>({alias: "show_modal"});
 
   priceLevels: number[] = [];
 
@@ -23,6 +23,6 @@ export class ModalPlaceCard implements OnInit {
   }
 
   closeModalCard (): void {
-    this.close_modal_card.emit(true);
+    this.close_modal_card.emit(false);
   }
 }

@@ -1,21 +1,24 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { Place } from '../../types/place';
 import { PlaceCard } from '../place-card/place-card';
-import { ModalPlaceCard } from '../modal-place-card/modal-place-card';
+import { readFromFavorite } from '../../shared/localStorageUtilite';
+import { FavoriteCounter } from '../../shared/favorite-counter';
+
 
 @Component({
-  imports: [PlaceCard, ModalPlaceCard],
+  imports: [PlaceCard],
   selector: 'app-main',
   styleUrl: './main.scss',
   templateUrl: './main.html',
 })
 export class Main implements OnInit {
 
+
   received_places: Place[] = [
     {
       id: '1',
       name: 'Aegean Hideaway',
-      category: 'Отель',
+      category: 'hotel',
       city: 'Имеровигли',
       country: 'Греция',
       rating: 5.0,
@@ -115,7 +118,7 @@ export class Main implements OnInit {
     {
       id: '6',
       name: 'Aurora Glass Lodge',
-      category: 'Отель',
+      category: 'hotel',
       city: 'Рованиеми',
       country: 'Финляндия',
       rating: 4.8,
@@ -144,45 +147,49 @@ export class Main implements OnInit {
     { id: 8, name: 'СПА и релакс' },
   ];
 
-
-
-  show_full_place_card = signal(false);
   applied_filter = signal('Все');
-  places  = computed(() =>{
+  places = computed(() => {
     let filter = this.applied_filter();
 
     if (filter === 'Все') {
       return this.received_places;
     }
-    if (filter === "Отели") {
-      filter = "Отель"
-    } else if (filter === "Рестораны") {
-      filter = "Ресторан"
+    if (filter === 'Отели') {
+      filter = 'Отель';
+    } else if (filter === 'Рестораны') {
+      filter = 'Ресторан';
     }
-    return this.received_places.filter(place => place.category === filter);
+    return this.received_places.filter((place) => place.category === filter);
   });
 
+  constructor(private favoriteCounter: FavoriteCounter) {
 
-  detailed_place = signal<Place>(this.places()[0]);
-
+  }
 
   ngOnInit(): void {
-    //console.log(this.places());
+    const favoriteNames: string[] = readFromFavorite();
+    this.received_places.map((place: Place) => {
+       if (favoriteNames.includes(place.name)) {
+         place.inFavorite = true;
+       }
+    })
+
+    this.favoriteCounter.favoriteCount.set(favoriteNames.length);
 
   }
 
-  showFullPlaceDetails(place: Place) {
-    this.show_full_place_card.set(true);
-    this.detailed_place.set(place);
-  }
-
-  hideFullPlaceDetails(isToHide: boolean) {
-    if (isToHide) {
-      this.show_full_place_card.set(false);
-    }
-  }
 
   setFilter(filter: string) {
     this.applied_filter.set(filter);
   }
+
+  updateCounter() {
+    const favoriteNames: string[] = readFromFavorite();
+    this.favoriteCounter.favoriteCount.set(favoriteNames.length);
+
+  }
+
+
+
+
 }

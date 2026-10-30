@@ -1,46 +1,59 @@
-import { Component, input, Input, OnInit, output } from '@angular/core';
+import { Component, HostListener, input, InputSignal, OnInit, output, OutputEmitterRef, Renderer2, signal } from '@angular/core';
 import { Place } from '../../types/place';
+import { ModalPlaceCard } from '../modal-place-card/modal-place-card';
+import { removeFromFavorite, saveToFavorite } from '../../shared/localStorageUtilite';
 
 @Component({
-  imports: [],
+  imports: [ModalPlaceCard],
   selector: 'app-place-card',
   styleUrl: './place-card.scss',
   templateUrl: './place-card.html',
 })
 export class PlaceCard implements OnInit {
-  place = input.required<Place>();
-  show_full_details = output<Place>({alias:'full_details'});
+  place:InputSignal<Place> = input.required<Place>();
+  updatedFavorite: OutputEmitterRef<void> = output();
 
+  isModalOpen = false;
 
+  priceLevels: number[] = [];
 
+  constructor(private renderer: Renderer2) {
+  }
 
-
-
-  priceLevels:number[] = [];
-
-
-  ngOnInit():void {
+  ngOnInit(): void {
     if (this.place()) {
       for (let i = 0; i < this.place().priceLevel; i++) {
         this.priceLevels.push(i);
       }
     }
+  }
 
+  openModal(): void {
+    this.isModalOpen = true;
+    this.renderer.setStyle(document.body, 'overflow', 'hidden');
 
 
   }
-
-  showFullCard():void {
-    this.show_full_details.emit(this.place())
-  }
-
-  addToFavorite(place: Place): void {
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.renderer.removeStyle(document.body, 'overflow');
 
   }
 
-  removeFromFavorite(place: Place): void {
-
+  @HostListener('window:keydown.escape') onEscape() {
+    if (this.isModalOpen) this.closeModal();
   }
 
+  updateFavorites(name: string): void {
+    if (this.place().inFavorite) {
+      removeFromFavorite(this.place().name);
+      this.place().inFavorite = false;
+    } else {
+      saveToFavorite(this.place().name);
+      this.place().inFavorite = true;
+    }
 
+    this.updatedFavorite.emit();
+
+  }
 }

@@ -1,10 +1,5 @@
 <div class="main">
-  @if (show_full_place_card()) {
-    <app-modal-place-card [detailed_place]="detailed_place()"
-                          (close_modal_card)="hideFullPlaceDetails($event)">
 
-    </app-modal-place-card>
-  }
   <div class="main_info_container">
     <section class="main_info">
       <div class="main_info__text">
@@ -38,7 +33,7 @@
       @if (places().length > 0) {
       <section class="places__cards">
           @for (place of places(); track place) {
-            <app-place-card [place]="place" (full_details)="showFullPlaceDetails(place)"></app-place-card>
+            <app-place-card [place]="place" (updatedFavorite)="updateCounter()"/>
           }
       </section>
       }
