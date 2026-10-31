@@ -3,17 +3,18 @@ import { Place } from '../../types/place';
 import { PlaceCard } from '../place-card/place-card';
 import { readFromFavorite } from '../../shared/localStorageUtilite';
 import { FavoriteCounter } from '../../shared/favorite-counter';
+import { category_conversion } from '../../types/category_conversion';
+import { PlaceCategoryPipe } from '../pipes/place-category-pipe';
+import { Tooltip } from '../../shared/ui/tooltip';
 
 
 @Component({
-  imports: [PlaceCard],
+  imports: [PlaceCard, PlaceCategoryPipe, Tooltip],
   selector: 'app-main',
   styleUrl: './main.scss',
   templateUrl: './main.html',
 })
 export class Main implements OnInit {
-
-
   received_places: Place[] = [
     {
       id: '1',
@@ -38,7 +39,7 @@ export class Main implements OnInit {
     {
       id: '2',
       name: 'Aqua Vista',
-      category: 'Ресторан',
+      category: 'restaurant',
       city: 'Мале',
       country: 'Мальдивы',
       rating: 4.9,
@@ -58,7 +59,7 @@ export class Main implements OnInit {
     {
       id: '3',
       name: 'Mist Springs',
-      category: 'СПА и релакс',
+      category: 'spa',
       city: 'Хаконе',
       country: 'Япония',
       rating: 4.7,
@@ -78,7 +79,7 @@ export class Main implements OnInit {
     {
       id: '4',
       name: 'Skyline Cinema',
-      category: 'Развлечения',
+      category: 'entertainment',
       city: 'Дубай',
       country: 'ОАЭ',
       rating: 4.4,
@@ -98,7 +99,7 @@ export class Main implements OnInit {
     {
       id: '5',
       name: 'Echoes of Stone',
-      category: 'Культура',
+      category: 'culture',
       city: 'Матера',
       country: 'Италия',
       rating: 4.9,
@@ -136,48 +137,39 @@ export class Main implements OnInit {
     },
   ];
 
-  filters = [
-    { id: 1, name: 'Все' },
-    { id: 2, name: 'Отели' },
-    { id: 3, name: 'Рестораны' },
-    { id: 4, name: 'Развлечения' },
-    { id: 5, name: 'Природа' },
-    { id: 6, name: 'Культура' },
-    { id: 7, name: 'Архитектура' },
-    { id: 8, name: 'СПА и релакс' },
-  ];
+  filters: { id: number; name: string }[] = [];
 
   applied_filter = signal('Все');
   places = computed(() => {
     let filter = this.applied_filter();
 
-    if (filter === 'Все') {
+    if (filter === 'all') {
       return this.received_places;
     }
-    if (filter === 'Отели') {
-      filter = 'Отель';
-    } else if (filter === 'Рестораны') {
-      filter = 'Ресторан';
-    }
+
     return this.received_places.filter((place) => place.category === filter);
   });
 
   constructor(private favoriteCounter: FavoriteCounter) {
-
+    this.filters = category_conversion.map((item) => {
+      return {
+        id: item.id,
+        name: item.original,
+      };
+    });
   }
 
   ngOnInit(): void {
     const favoriteNames: string[] = readFromFavorite();
     this.received_places.map((place: Place) => {
-       if (favoriteNames.includes(place.name)) {
-         place.inFavorite = true;
-       }
-    })
+      if (favoriteNames.includes(place.name)) {
+        place.inFavorite = true;
+      }
+    });
 
     this.favoriteCounter.favoriteCount.set(favoriteNames.length);
-
+    this.setFilter('all');
   }
-
 
   setFilter(filter: string) {
     this.applied_filter.set(filter);
@@ -186,10 +178,5 @@ export class Main implements OnInit {
   updateCounter() {
     const favoriteNames: string[] = readFromFavorite();
     this.favoriteCounter.favoriteCount.set(favoriteNames.length);
-
   }
-
-
-
-
 }

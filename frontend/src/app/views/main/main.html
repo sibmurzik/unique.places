@@ -23,21 +23,21 @@
       <section class="places__filters">
         @for (filter of filters; track filter.id) {
           <div class="places__filter"
-               [class.places__filter_active] = "filter.name === applied_filter()"
-               (click)="setFilter(filter.name)">
-            {{ filter.name }}
+               [class.places__filter_active]="filter.name === applied_filter()"
+               (click)="setFilter(filter.name)"
+               appTooltip="Фильтр">
+            {{ filter.name | placeCategory: true }}
           </div>
         }
 
       </section>
       @if (places().length > 0) {
-      <section class="places__cards">
+        <section class="places__cards">
           @for (place of places(); track place) {
-            <app-place-card [place]="place" (updatedFavorite)="updateCounter()"/>
+            <app-place-card [place]="place" (updatedFavorite)="updateCounter()" />
           }
-      </section>
-      }
-      @else {
+        </section>
+      } @else {
         <div class="places__absent">
           <img src="/images/absent_places.png" alt="Magnifying glass">
           <p class="places__absent_title">Ничего не найдено</p>

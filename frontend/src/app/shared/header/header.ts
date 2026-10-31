@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FavoriteCounter } from '../favorite-counter';
+import { Tooltip } from '../ui/tooltip';
 
 @Component({
-  imports: [],
+  imports: [Tooltip],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
@@ -13,5 +14,4 @@ export class Header {
   get counter() {
     return this.favoriteService.favoriteCount();
   }
-
 }
