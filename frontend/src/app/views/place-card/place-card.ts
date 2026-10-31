@@ -1,10 +1,15 @@
 import { Component, HostListener, input, InputSignal, OnInit, output, OutputEmitterRef, Renderer2, signal } from '@angular/core';
 import { Place } from '../../types/place';
 import { ModalPlaceCard } from '../modal-place-card/modal-place-card';
-import { removeFromFavorite, saveToFavorite } from '../../shared/localStorageUtilite';
+import {
+  readFromFavorite,
+  removeFromFavorite,
+  saveToFavorite,
+} from '../../shared/localStorageUtilite';
 import { PlaceCategoryPipe } from '../pipes/place-category-pipe';
 import { PlacePricePipe } from '../pipes/place-price-pipe';
 import { Tooltip } from '../../shared/ui/tooltip';
+import { FavoriteCounter } from '../../shared/favorite-counter';
 
 @Component({
   imports: [ModalPlaceCard, PlaceCategoryPipe, PlacePricePipe, Tooltip],
@@ -18,7 +23,8 @@ export class PlaceCard implements OnInit {
 
   isModalOpen = false;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2
+              , private favoriteCounter: FavoriteCounter) {}
 
   ngOnInit(): void {}
 
@@ -45,6 +51,11 @@ export class PlaceCard implements OnInit {
     }
 
     this.updatedFavorite.emit();
+  }
+
+  updateCounter() {
+    const favoriteNames: string[] = readFromFavorite();
+    this.favoriteCounter.favoriteCount.set(favoriteNames.length);
   }
 
 
